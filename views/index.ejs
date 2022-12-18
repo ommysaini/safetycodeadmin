@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
+   <title>Billing Software</title>
+
+
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.min.css">
+   <link rel="stylesheet" href="../public/css/style.css">
+</head>
+
+<body>
+   <%- include('./partials/Sidebar.ejs') %>
+
+
+   <div class="main-content">
+      <header>
+         <div class="search-wrapper">
+            <span class="ti-search"></span>
+            <input type="search" placeholder="Search">
+         </div>
+         <div class="social-icons">
+            <span class="ti-bell"></span>
+            <span class="ti-comment"></span>
+            <div></div>
+         </div>
+      </header>
+
+      <main>
+         <h2 class="dash-title">Dashboard</h2>
+
+         <div class="dash-cards">
+            <div class="card-single">
+               <div class="card-body">
+                  <span class="ti-briefcase"></span>
+                  <div>
+                     <h5>Income</h5>
+                     <h4>INR 210002.00/-</h4>
+                  </div>
+               </div>
+               <div class="card-footer">
+                  <a href=""></a>
+               </div>
+            </div>
+
+            <div class="card-single">
+               <div class="card-body">
+                  <span class="ti-reload"></span>
+                  <div>
+                     <h5>Total Invoice</h5>
+                     <h4>2021</h4>
+                  </div>
+               </div>
+               <div class="card-footer">
+                  <a href=""></a>
+               </div>
+            </div>
+
+            <div class="card-single">
+               <div class="card-body">
+                  <span class="ti-check-box"></span>
+                  <div>
+                     <h5>Paid Amount</h5>
+                     <h4>INR 51105.00</h4>
+                  </div>
+               </div>
+               <div class="card-footer">
+                  <a href=""></a>
+               </div>
+            </div>
+            <div class="card-single">
+               <div class="card-body">
+                  <span class="ti-check-box"></span>
+                  <div>
+                     <h5>Due Amount</h5>
+                     <h4>INR 511005.00</h4>
+                  </div>
+               </div>
+               <div class="card-footer">
+                  <a href=""></a>
+               </div>
+            </div>
+         </div>
+
+         <section class="recent">
+            <div class="activity-grid">
+
+               <div class="activity-card">
+                  <h3>Recent order</h3>
+
+                  <div class="table-responsive">
+                     <table>
+                        <thead>
+                           <tr>
+                              <th>Invoice No.</th>
+                              <th>Invoice Date</th>
+                              <th>Amount</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>#1001</td>
+                              <td>15 Aug 2022</td>
+                              <td>10000.00</td>
+                              <td> <span class="badge success">Success</span></td>
+                              <td><button type="button" onclick="alert('You want to edit this invoice')">View</button></td>
+                           </tr>
+                           <tr>
+                              <td>#1001</td>
+                              <td>15 Aug 2022</td>
+                              <td>5201.00</td>
+                              <td> <span class="badge success">Success</span></td>
+                              <td><button type="button" onclick="alert('You want to edit this invoice')">View</button></td>
+                           </tr>
+                           <tr>
+                              <td>#1001</td>
+                              <td>15 Aug 2022</td>
+                              <td>960.00</td>
+                              <td> <span class="badge success">Success</span></td>
+                              <td><button type="button" onclick="alert('You want to edit this invoice')">View</button></td>
+                           </tr>
+                           <tr>
+                              <td>#1001</td>
+                              <td>15 Aug 2022</td>
+                              <td>12343.00</td>
+                              <td> <span class="badge success">Success</span></td>
+                              <td><button type="button" onclick="alert('You want to edit this invoice')">View</button></td>
+                           </tr>
+                           <tr>
+                              <td>#1001</td>
+                              <td>15 Aug 2022</td>
+                              <td>1232.00</td>
+                              <td> <span class="badge warning">Processing</span></td>
+                              <td><button type="button" onclick="alert('You want to edit this invoice')">View</button></td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+
+                  
+               </div>
+               <div class="summary">
+                  <div class="summary-card">
+                     <div class="summary-single">
+                        <span class="ti-id-badge"></span>
+                        <div>
+                           <h5>1960</h5>
+                           <small>Total Item</small>
+                        </div>
+                     </div>
+                     <div class="summary-single">
+                        <span class="ti-calendar"></span>
+                        <div>
+                           <h5>160</h5>
+                           <small>Total Item Category</small>
+                        </div>
+                     </div>
+                     <div class="summary-single">
+                        <span class="ti-face-smile"></span>
+                        <div>
+                           <h5>12</h5>
+                           <small>Registred Biller</small>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="bday-card">
+                     <div class="bday-flex">
+                        <div class="bday-img"></div>
+                        <div class="bday-info">
+                           <h5>Ommy Saini</h5>
+                           <small>Birthday Today</small>
+                        </div>
+                     </div>
+                     <div class="text-center">
+                        <button>
+                           <span class="ti-gift"></span>
+                           Wish him
+                        </button>
+                     </div>
+                  </div>
+
+
+               </div>
+            </div>
+         </section>
+
+
+
+
+
+
+
+      </main>
+
+
+
+   </div>
+
+</body>
+
+</html>

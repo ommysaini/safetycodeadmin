@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
+   <title>Billing Software</title>
+
+
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.min.css">
+   <link rel="stylesheet" href="../public/css/style.css">
+</head>
+
+<body>
+   <%- include('./partials/Sidebar.ejs') %>
+
+
+   <div class="main-content">
+      <header>
+         <div class="search-wrapper">
+            <span class="ti-search"></span>
+            <input type="search" placeholder="Search">
+         </div>
+         <div class="social-icons">
+            <span class="ti-bell"></span>
+            <span class="ti-comment"></span>
+            <div></div>
+         </div>
+      </header>
+
+      <main>
+
+         <div class="dash-cards">
+            <div class="card-single">
+               <div class="card-body">
+                  <span class="ti-briefcase"></span>
+                  <div>
+                     <h5>Products</h5>
+                     <h4>1202</h4>
+                  </div>
+               </div>
+               <div class="card-footer">
+                  <a href="">View All</a> ||
+                  <a href="">Add New</a>
+               </div>
+            </div>
+            <div class="card-single">
+                <div class="card-body">
+                   <span class="ti-briefcase"></span>
+                   <div>
+                      <h5>Item</h5>
+                      <h4>1202</h4>
+                   </div>
+                </div>
+                <div class="card-footer">
+                   <a href="add-item">Add New</a>
+                </div>
+             </div>
+             <div class="card-single">
+                <div class="card-body">
+                   <span class="ti-briefcase"></span>
+                   <div>
+                      <h5>Stock</h5>
+                      <h4>1202</h4>
+                   </div>
+                </div>
+                <div class="card-footer">
+                   <a href="add-item">Add New</a>
+                </div>
+             </div>
+
+            
+        </div>
+
+         <section class="recent">
+            <div class="activity-grid-sales">
+
+               <div class="activity-card">
+                  <h3>Recent Bills</h3>
+
+                  <div class="table-responsive">
+                     <table>
+                        <thead>
+                           <tr>
+                              <th>S No.</th>
+                              <th>Item Name</th>
+                              <th>Amount</th>
+                              <th>Stock</th>
+                              <th>Type</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>#1001</td>
+                              <td>Suger</td>
+                              <td>10000.00</td>
+                              <td> <span class="badge success">525</span></td>
+                              <td>Kg</td>
+                              <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
+                           </tr>
+                           <tr>
+                              <td>#1001</td>
+                              <td>Oil</td>
+                              <td>5201.00</td>
+                              
+                              <td> <span class="badge success">100</span></td>
+                              <td>Ltr</td>
+                              <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
+                           </tr>
+                           <tr>
+                              <td>#1001</td>
+                              <td>Rice</td>
+                              <td>960.00</td>
+                              
+                              <td> <span class="badge warning">499</span></td>
+                              <td>Kg</td>
+                              <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
+                           </tr>
+                           <tr>
+                              <td>#1001</td>
+                              <td>Milk</td>
+                              <td>12343.00</td>
+                             
+                              <td> <span class="badge warning">796</span></td>
+                              <td>Ltr</td>
+                              <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
+                           </tr>
+                           <tr>
+                              <td>#1001</td>
+                              <td>Colgate</td>
+                              <td>1232.00</td>
+                              
+                              <td> <span class="badge warning">9599</span></td>
+                              <td>Bag</td>
+                              <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+
+                  
+               </div>
+               
+            </div>
+         </section>
+
+
+
+
+
+
+
+      </main>
+
+
+
+   </div>
+
+</body>
+
+</html>
