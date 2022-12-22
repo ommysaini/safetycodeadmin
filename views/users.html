@@ -5,7 +5,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
-   <title>Billing Software</title>
+   <title>Safetycode</title>
 
 
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.min.css">
@@ -13,25 +13,73 @@
 </head>
 
 <body>
-   <%- include('./partials/Sidebar.ejs') %>
+   <input type="checkbox" id="sidebar-toggle">
+   <div class="sidebar">
+      <div class="sidebar-header">
+         <h3 class="brand">
+            <span class="ti-unlink"></span>
+            <span>Safetycode</span>
+   
+         </h3>
+         <label for="sidebar-toggle" class="ti-menu-alt"></label>
+   
+      </div>
+   
+      <div class="sidebar-menu">
+         <ul>
+            <li>
+               <a href="index.html">
+                  <span class="ti-home"></span>
+                  <span>Home</span>
+               </a>
+            </li>
+            <li>
+               <a href="users.html">
+                  <span class="ti-face-smile"></span>
+                  <span>Users</span>
+               </a>
+            </li>
+            <li>
+               <a href="purchase.html">
+                  <span class="ti-agenda"></span>
+                  <span>Partners</span>
+               </a>
+            </li>
+            <li>
+               <a href="report.html">
+                  <span class="ti-clipboard"></span>
+                  <span>Report</span>
+               </a>
+            </li>
+         </ul>
+      </div>
+   </div>
 
 
    <div class="main-content">
-      <header>
+      <!-- <header>
          <div class="search-wrapper">
             <span class="ti-search"></span>
-            <input type="search" placeholder="Search">
+            <input onclick="getSerachResult(event)" type="text" placeholder="Search">
          </div>
          <div class="social-icons">
             <span class="ti-bell"></span>
             <span class="ti-comment"></span>
             <div></div>
          </div>
-      </header>
+      </header> -->
 
       <main>
 
-         <div class="dash-cards">
+
+         <div class="search-container">
+            <form action="userdetails.html">
+              <!-- <input type="text" placeholder="Search.." name="search"> -->
+              <input id="search"  type="text" placeholder="Search">
+              <button onclick="getSerachResult(event)" type="submit"> <span class="ti-search"></span></button>
+            </form>
+          </div>
+         <!-- <div class="dash-cards">
             <div class="card-single">
                <div class="card-body">
                   <span class="ti-briefcase"></span>
@@ -71,21 +119,20 @@
                    <a href="">Add New</a>
                 </div>
              </div>
-        </div>
+        </div> -->
 
          <section class="recent">
             <div class="activity-grid-sales">
 
                <div class="activity-card">
-                  <h3>Recent Invoice</h3>
+                  <!-- <h3>Recent Invoice</h3> -->
 
                   <div class="table-responsive">
                      <table>
                         <thead>
                            <tr>
-                              <th>Invoice No.</th>
-                              <th>Invoice Date</th>
-                              <th>Amount</th>
+                              <th>S No.</th>
+                              <th>Date</th>
                               <th>Status</th>
                               <th>Action</th>
                            </tr>
@@ -94,37 +141,37 @@
                            <tr>
                               <td>#1001</td>
                               <td>15 Aug 2022</td>
-                              <td>10000.00</td>
+                              
                               <td> <span class="badge success">Success</span></td>
                               <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
                            </tr>
                            <tr>
                               <td>#1001</td>
                               <td>15 Aug 2022</td>
-                              <td>5201.00</td>
+                              
                               <td> <span class="badge success">Success</span></td>
                               <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
                            </tr>
                            <tr>
                               <td>#1001</td>
                               <td>15 Aug 2022</td>
-                              <td>960.00</td>
+                             
                               <td> <span class="badge success">Success</span></td>
                               <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
                            </tr>
                            <tr>
                               <td>#1001</td>
                               <td>15 Aug 2022</td>
-                              <td>12343.00</td>
+                              
                               <td> <span class="badge success">Success</span></td>
                               <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
                            </tr>
                            <tr>
                               <td>#1001</td>
                               <td>15 Aug 2022</td>
-                              <td>1232.00</td>
+                             
                               <td> <span class="badge warning">Processing</span></td>
-                              <td><button type="button" onclick="alert('You want to view this invoice')">View</button> &nbsp; <button type="button" onclick="alert('You want to edit this invoice')">Edit</button></td>
+                              <td><button type="button"><a href="userdetails.html">View</a></button> &nbsp; <button type="button"><a href="edit.html">Edit</a></button></td>
                            </tr>
                         </tbody>
                      </table>
@@ -147,6 +194,49 @@
 
 
    </div>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js" integrity="sha512-zJYu9ICC+mWF3+dJ4QC34N9RA0OVS1XtPbnf6oXlvGrLGNB8egsEzu/5wgG90I61hOOKvcywoLzwNmPqGAdATA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script>
+      var result;
+      var serchResult;
+     
+      async function getSerachResult(event){
+         event.preventDefault();
+         // let x = new URLSearchParams(location.search);
+         // const search  = x.get("key")
+         let search = document.getElementById("search").value;
+
+         axios.get("https://surkshacode.com/safteycode/admin/vehicle/"+search)
+            .then(res =>{
+               serchResult = res.data;
+              if(res.status==200){
+               window.location.href = "file:///D:/ionic/safetycode-panel/views/userdetails.html?search="+search
+              }
+               console.log(serchResult)
+               debugger
+            })
+            .catch((error)=>{
+               console.log(error);
+               if(error.response){
+                  alert(error.response.data.message)
+               }
+            })
+      }
+      // async function getSerachResult(event){
+      //    event.preventDefault();
+      //    let search = document.getElementById("search").value;
+      //    try{
+      //       const res = await fetch("https://surkshacode.com/safteycode/admin/vehicle/"+search)
+      //       result = (await res.json());
+      //       console.log(result, "your serach result")
+      //       debugger
+      //    }
+      //    catch(error){
+      //       console.log("Something is wrong with api", error)
+      //       debugger
+      //    }
+
+      // }
+   </script>
 
 </body>
 

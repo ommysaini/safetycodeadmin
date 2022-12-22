@@ -13,7 +13,47 @@
 </head>
 
 <body>
-   <%- include('./partials/Sidebar.ejs') %>
+   <input type="checkbox" id="sidebar-toggle">
+   <div class="sidebar">
+      <div class="sidebar-header">
+         <h3 class="brand">
+            <span class="ti-unlink"></span>
+            <span>Safetycode</span>
+   
+         </h3>
+         <label for="sidebar-toggle" class="ti-menu-alt"></label>
+   
+      </div>
+   
+      <div class="sidebar-menu">
+         <ul>
+            <li>
+               <a href="index.html">
+                  <span class="ti-home"></span>
+                  <span>Home</span>
+               </a>
+            </li>
+            <li>
+               <a href="users.html">
+                  <span class="ti-face-smile"></span>
+                  <span>Users</span>
+               </a>
+            </li>
+            <li>
+               <a href="purchase.html">
+                  <span class="ti-agenda"></span>
+                  <span>Partners</span>
+               </a>
+            </li>
+            <li>
+               <a href="report.html">
+                  <span class="ti-clipboard"></span>
+                  <span>Report</span>
+               </a>
+            </li>
+         </ul>
+      </div>
+   </div>
 
 
    <div class="main-content">
