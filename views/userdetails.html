@@ -127,7 +127,7 @@
    
    
             <div>
-               <button type="button"><a href="edit.html">Edit</a></button>
+               <button type="button"><a :href="'edit.html?search='+ searchParam">Edit</a></button>
            </div>
    
    
@@ -151,11 +151,13 @@
          el:'#app',
          data:{
             searchResult:{},
+            searchParam: '',
          },
          methods:{
             getSerachResult: function(event){
                let x = new URLSearchParams(location.search);
                const search  = x.get("search")  //url
+               this.searchParam = search
                // let search = document.getElementById("search").value;
 
                axios.get("https://surkshacode.com/safteycode/admin/vehicle/"+search)
