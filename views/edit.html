@@ -241,7 +241,7 @@ input {
                }
                   let editData = this.vehicleData;    
                try{
-                  const res = await axios.put('http://api.safetycode.in/safteycode/admin/vehicle/'+this.searchParam, editData);
+                  const res = await axios.put('https://api.safetycode.in/safteycode/admin/vehicle/'+this.searchParam, editData);
                   res.data.json;
                   alert("Your data has been saved successfully!")
                }
