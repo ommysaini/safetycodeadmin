@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><%- page.title %> | <%= req.session.activeClient.title%></title>
+        <%- include partials/common-head.ejs %>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous" referrerpolicy="no-referrer" hreflang="en"/>
+    <style>
+        .filterBtn{
+            padding: 4px 7px;
+            border: 1px solid #084196;
+            box-shadow: 0px 0px 3px 1px #084196;
+            /* background: red; */
+            margin: 0px 13px;
+            cursor: pointer;
+
+        }
+        .filterBtn1{
+            padding: 4px 7px;
+            background-color: #084196 ;
+            color: white;
+            border: 1px solid #084196;
+            /* background: red; */
+            margin: 0px 13px;
+            cursor: pointer;
+
+        }
+        .mainCategoryTitle{
+            background: #084196;
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+        .childCategoryTitle{
+            padding: 0px;
+            margin: 0px;
+            text-align: center;
+            background: white;
+            color: #084196;
+            margin: 10px;
+            font-size: 22px;
+        }
+        .dateContainer{
+            display: flex;
+            width: fit-content;
+            justify-content: flex-start;
+            /* flex-wrap: wrap; */
+            flex-direction: column;
+            position: absolute;
+            background: white;
+            border: 1px solid #084196;
+            height: 60vh;
+            height: fit-content;
+            max-height: 60vh;
+            overflow: scroll;
+            z-index: 1;
+            left: 50vw;
+            transform: translatex(-78%);
+            top: 42px;
+        }
+        @media screen and (max-width:768px){
+            .dateContainer{
+                transform: translatex(8%);
+                top: 57px;
+            }
+
+
+        }
+        .dateSection{
+            background: white ;
+            color: #084196;
+            border: 1px solid #084196;
+            text-align: center;
+            padding: 4px 10px;
+            font-size: 13px;
+            font-style: italic;
+            width: fit-content;
+            margin: 5px;
+            border-radius: 10px;
+            
+        }
+        .blogCard{
+            padding: 10px;
+        }
+        .blogCard a{
+            cursor: pointer;
+        }
+
+
+        .blogCard .row{
+            box-shadow: 5px 5px 5px #084196; 
+            border-top: 1px solid #084196; 
+            border-left: 1px solid #084196; 
+            display: flex;
+            align-items: center;
+
+        }
+        .blogCard a:hover .row{
+            box-shadow: -5px -5px 5px #084196; 
+            border-bottom: 1px solid #084196; 
+            border-right: 1px solid #084196; 
+            display: flex;align-items: center;
+            overflow: hidden;
+            
+        }
+
+
+        .blogCard a .row h1{
+            line-height: 110%;
+            letter-spacing: 0.5px;
+            font-size: 20px;
+            margin: 15px 0px 15px 5px ;
+            height: 48px;
+            overflow: hidden;
+            
+        }
+        .blogCard a .row{
+            border-bottom: 1px solid transparent  ;
+        }
+        [v-cloak]{
+            display: none;
+        }
+        .dateBox{
+            border: 1px solid;
+            padding: 10px;
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .dateBox p:nth-child(1){
+            color: #084196;
+            font-size: 18px;
+            text-align: center;
+            padding-bottom: 3px;
+            border-bottom: 1px solid #084196;
+            width: 100%
+        }
+        .resetDateClass {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .resetDateClass i {
+            cursor: pointer;
+        }
+        @media screen and (max-width:768px){
+            .blogCard .row{
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+        }
+
+.col-md-7thp{
+    width: 14.28% !important;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+#selected-Date, .selected-Date {
+    border: 1.5px solid #084196;;
+    padding: 0.1em;
+    text-align: center;
+}
+#selected-Date{
+    background-color: #084196;
+    color: #fff;
+}
+.date-wrapper{
+    border: 1px solid #084196;;
+    padding:.1em;
+    margin: .1em;
+}
+.date-wrapper button.col-12 {
+    background-color: #bae5f6;
+    margin: 1px;
+    width: 100%;
+    border: none;
+    border-bottom:1px solid rgb(35 55 108);
+}
+
+.date-wrapper button:hover{
+   background-color: rgb(35 55 108) !important;
+    color: #fff;
+}
+.monthDiv {
+    border: 1px solid #084196;
+    background: #efefef;
+    margin-bottom: 2.5px;
+    height: 2.2em;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.monthDiv button{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+.monthDiv button i.fa{
+    font-size: 2em;
+}
+select#drpdwnMon, select#drpdwnYr {
+    border: 1px solid #084196;
+    padding: 4px;
+    margin-bottom: 10px;
+}
+    </style> 
+
+</head>
+<body>
+    <div id="app" v-cloak>
+        <div class="content-wrap">
+            <div id="home" class="body-wrapper">
+                
+                <%- include partials/blogHeader.ejs %>
+
+                <!-- Start Pages Title -->
+                <!-- <section id="Page-title" class="Page-title-Style1">
+                    <div class="container inner-Pages">
+                        <div class="row">
+                            <div class="Page-title">
+                                <div class="col-md-6 Title-Pages">
+                                    <h2><%= page.title%></h2>
+                                </div>
+                                <div class="col-md-6 Catogry-Pages">
+                                    <p>You are here :  <a href="/">Home</a>   /   <%= page.title%></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section> -->
+                <!-- End Pages Title -->          
+               
+                    <section id="Latest-News" class="light-wrapper">
+                        <div class="container inner pt-0 pb-0">
+                            <!-- <div class="row" v-if="blogs.length"> -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    
+                                    <!-- <a :href="'/blog/'+blog.slug+'/'+blog.uri">Read More</a> -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            
+                                            <h1 class="mainCategoryTitle">{{mainCategory.title}}</h1>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h2 class="childCategoryTitle" >{{childCategory.title}} >> {{childCategory1.title}} </h2>
+                                        </div>                                      
+                                    </div>
+                                    
+                                    <div v-if="blogs.length>0&&!showingDateBlogs" class="row">
+                                    <!-- <div class="row"> -->
+                                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                            <div class="dateBox">
+                                                <p>Dates</p>
+                                                <div class="newCalander">
+                                                    <div class="col-12">
+                                                        <h4 id="selected-Date" class="selected-date text-capitalize">{{calander.selectedMon}},  {{calander.year}} </h4>
+                                                    </div>
+                                                    <div class="row justify-content-between">
+                                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                                            <label for="drpdwnMon">Select Month</label>
+                                                            <select class="text-capitalize" name="drpdwnMon" id="drpdwnMon" v-model="drpdwnMon" @change="selectedDrpdwnMon" >
+                                                                <option  :value="drpdwnMon" selected style="text-transform: capitalize;">{{drpdwnMon}}</option>
+                                                                <option :value="mon" v-for="(mon, ind) in  calander.months">{{ mon }}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                                            <label for="drpdwnYr">Select Year</label>
+                                                            <!-- <select name="drpdwnYr" id="drpdwnYr" v-model="drpdwnYear"  @change="selectedDrpdwnYr"> -->
+                                                            <select name="drpdwnYr" id="drpdwnYr" v-model="drpdwnYear"  @change="selectedDrpdwnYr">
+                                                                <!-- <option value="none" >Select Year</option> -->
+                                                                <option value="2022" >2022</option>
+                                                                <option value="2021" >2021</option>
+                                                                <option value="2020" >2020</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row date-wrapper">
+                                                        <div class="col-12 d-flex text-center monthDiv">
+                                                            <button class="col-md-1 border" @click="prevMonth">
+                                                                <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+                                                            </button>
+                                                            <h4 class="col-md-10 selected-date text-capitalize">{{calander.selectedMon}} </h4>
+                                                            <button class="col-md-1" @click="nextMonth">
+                                                                <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-md-7thp" v-for="day in calander.days"><button id="calDays" class="col-12 mb-0" @click="getNewDate($event)">{{day}}</button></div>
+                                                    </div>                                                        
+                                                </div>
+                                                
+                                                <!-- <p class="dateSection" v-if="uniqueDates.length" v-for="date in uniqueDates" @click="goToBlogDateFilter(date)">{{date}} -->
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                                            <div class="row">
+                                                <div v-for="blog in blogs" class="col-md-6">
+                                                    <div class="blogCard">
+                                                        <a :href="'/blog/'+blog.postCategories[0].slug+'/'+blog.uri">
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-sm-6 col-md-4">
+                                                                    <img style="height: 75px;" v-if="blog.featureImg" :src="blog.featureImg" :alt="blog.title">
+                                                                    <img style="height: 75px;" v-else :src="childCategory.featureImg" :alt="blog.title">
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-6 col-md-8">
+                                                                    <h1 >{{blog.title}}</h1>
+                                                                </div>
+                                                            </div>
+                                                        </a>     
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
+                                        
+                                        
+                                    </div>
+                                    <div v-else-if="dateBlogs.length>0&&showingDateBlogs" class="row">
+                                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                            <div class="dateBox">
+                                                <p class="resetDateClass">Dates<i class="fa fa-refresh" title="Reset Date" aria-hidden="true" @click="resetDate()"></i></p>  
+                                                
+                                                <!-- <p class="dateSection" :style="[date==dateBlogs[0].publishedAt? {'background-color': '#084196', 'color': 'white', 'border': '1px solid white'}:{}]" v-if="uniqueDates.length" v-for="date in uniqueDates" @click="goToBlogDateFilter(date)">{{date}} -->
+                                                    <div class="newCalander">
+                                                        <div class="col-12">
+                                                            <h4 id="selected-Date" class="selected-date text-capitalize">{{calander.selectedMon}},  {{calander.year}} </h4>
+                                                        </div>
+                                                        <div class="row justify-content-between">
+                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                <label for="drpdwnMon">Select Month</label>
+                                                                <select class="text-capitalize" name="drpdwnMon" id="drpdwnMon" v-model="drpdwnMon" @change="selectedDrpdwnMon" >
+                                                                    <option  :value="drpdwnMon" selected style="text-transform: capitalize;">{{drpdwnMon}}</option>
+                                                                    <option :value="mon" v-for="(mon, ind) in  calander.months">{{ mon }}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                <label for="drpdwnYr">Select Year</label>
+                                                                <!-- <select name="drpdwnYr" id="drpdwnYr" v-model="drpdwnYear"  @change="selectedDrpdwnYr"> -->
+                                                                <select name="drpdwnYr" id="drpdwnYr" v-model="drpdwnYear"  @change="selectedDrpdwnYr">
+                                                                    <!-- <option value="none" >Select Year</option> -->
+                                                                    <option value="2022" >2022</option>
+                                                                    <option value="2021" >2021</option>
+                                                                    <option value="2020" >2020</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row date-wrapper">
+                                                            <div class="col-12 d-flex text-center monthDiv">
+                                                                <button class="col-md-1 border" @click="prevMonth">
+                                                                    <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+                                                                </button>
+                                                                <h4 class="col-md-10 selected-date text-capitalize">{{calander.selectedMon}} </h4>
+                                                                <button class="col-md-1" @click="nextMonth">
+                                                                    <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-7thp" v-for="day in calander.days"><button id="calDays" class="col-12 mb-0" @click="getNewDate($event)">{{day}}</button></div>
+                                                        </div>                                                        
+                                                    </div>
+                                                    
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p style="    font-size: 15px;
+                                                    color: #084196;
+                                                    margin-top: 10px;">Showing : <span style="font-weight:bold; text-transform: capitalize; margin-left:5px; margin-right: 5px;">{{childCategory.title}}</span> >> <span style="font-weight:bold; text-transform: capitalize;  margin-left:5px; margin-right: 5px;">{{childCategory1.title}}</span> >>  {{dateBlogs[0].publishedAt}} Articles</p>
+                                                </div>
+
+                                                <div v-for="blog in dateBlogs" class="col-md-6">
+                                                    <div class="blogCard">
+                                                        <a :href="'/blog/'+blog.postCategories[0].slug+'/'+blog.uri">
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-sm-6 col-md-4">
+                                                                    <img v-if="blog.featureImg" :src="blog.featureImg" :alt="blog.title">
+                                                                    <img v-else :src="childCategory.featureImg" :alt="blog.title">
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-6 col-md-8">
+                                                                    <h1 >{{blog.title}}</h1>
+                                                                </div>
+                                                            </div>
+                                                        </a>     
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    <div v-else class="Top-News row" >
+                                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                                            <div class="dateBox">
+                                                <p>Dates</p>
+                                                <div class="newCalander">
+                                                    <div class="col-12">
+                                                        <h4 id="selected-Date" class="selected-date text-capitalize">{{calander.selectedMon}},  {{calander.year}} </h4>
+                                                    </div>
+                                                    <div class="row justify-content-between">
+                                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                                            <label for="drpdwnMon">Select Month</label>
+                                                            <select class="text-capitalize" name="drpdwnMon" id="drpdwnMon" v-model="drpdwnMon" @change="selectedDrpdwnMon" >
+                                                                <option class="text-capitalize" :value="drpdwnMon" selected style="text-transform: capitalize;">{{drpdwnMon}}</option>
+                                                                <option :value="mon" v-for="(mon, ind) in  calander.months">{{ mon }}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                                            <label for="drpdwnYr">Select Year</label>
+                                                            <!-- <select name="drpdwnYr" id="drpdwnYr" v-model="drpdwnYear"  @change="selectedDrpdwnYr"> -->
+                                                            <select name="drpdwnYr" id="drpdwnYr" v-model="drpdwnYear"  @change="selectedDrpdwnYr">
+                                                                <!-- <option value="none" >Select Year</option> -->
+                                                                <option value="2022" >2022</option>
+                                                                <option value="2021" >2021</option>
+                                                                <option value="2020" >2020</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row date-wrapper">
+                                                        <div class="col-12 d-flex text-center monthDiv">
+                                                            <button class="col-md-1 border" @click="prevMonth">
+                                                                <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+                                                            </button>
+                                                            <h4 class="col-md-10 selected-date text-capitalize">{{calander.selectedMon}} </h4>
+                                                            <button class="col-md-1" @click="nextMonth">
+                                                                <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                       
+                                                        <div class="col-md-7thp" v-for="day in calander.days"><button id="calDays" class="col-12 mb-0" @click="getNewDate($event)">{{day}}</button></div>
+                                                    </div>                                                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                                             <div class="col-md-12">
+                                            <p style="    font-size: 15px;
+                                            color: #084196;
+                                            margin-top: 10px;">Showing : <span style="font-weight:bold; text-transform: capitalize; margin-left:5px; margin-right: 5px;">{{calander.year}}</span> >> <span style="font-weight:bold; text-transform: capitalize;  margin-left:5px; margin-right: 5px;">{{calander.selectedMon}}</span> >>  {{f_newDate}} Articles</p>
+                                        </div>
+                                        <div class="block-News text-center col-md-12">
+                                            <div class="Bottom-title-news wide-blog">
+                                                <div class="title-news text-left">
+                                                    <p>Sorry, Content not Found!</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                            <!-- <div v-if="blogs.length" class="Top-News row" > -->
+                            
+                        </div>
+                    </section>
+                
+                <%- include partials/footer.ejs %>
+
+            </div>
+        
+            <!-- Back to top Link -->
+            <div id="to-top" class="main-bg"><span class="fa fa-chevron-up"></span></div>
+        </div>
+    </div>
+    
+    
+    <script type="text/x-template" id="pagination">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li>
+                    <span type="button" @click="onClickFirstPage" :disabled="isInFirstPage" aria-label="Go to first page"> First </span> 
+                </li>
+                
+                <li>
+                    <span type="button" @click="onClickPreviousPage" :disabled="isInFirstPage" aria-label="Go to previous page"> Previous </span>
+                </li>
+            
+                <li v-for="page in pages" :class="{ selected: isPageActive(page.name) }" :disabled="page.isDisabled">
+                    <span type="button" @click="onClickPage(page.name)" :aria-label="`Go to page number ${page.name}`"> {{ page.name }} </span>
+                </li>
+                
+                <li>
+                    <span type="button" @click="onClickNextPage" :disabled="isInLastPage" aria-label="Go to next page"> Next </span>
+                </li>
+            
+                <li>
+                    <span type="button" @click="onClickLastPage" :disabled="isInLastPage" aria-label="Go to last page"> Last </span>
+                </li>
+            </ul>
+           
+        </nav>
+    </script>
+
+    <%- include partials/js-src.ejs %>
+    
+<script src="https://unpkg.com/vee-validate@3"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://unpkg.com/vue-router@3"></script>
+<script type="text/javascript">
+    var popups=[];
+    var blogs=[];
+    var blogCategories=[];
+    Vue.filter('formatDate', function(value) {
+        if (value) {
+            return moment(String(value)).format('MM/DD/YYYY')
+            console.log(value);
+        }
+    });
+    var router = new VueRouter({
+        mode: 'history',
+        routes: []
+    });
+
+    const Pagination = {
+        name: 'pagination',
+        template: '#pagination',
+        props: {
+            maxVisibleButtons: {
+                type: Number,
+                required: false,
+                default: 3
+            },
+            totalPages: {
+                type: Number,
+                required: true
+            },
+            total: {
+                type: Number,
+                required: true
+            },
+            perPage: {
+                type: Number,
+                required: true
+            },
+            currentPage: {
+                type: Number,
+                required: true
+            },
+
+        },
+        computed: {
+            startPage() {
+                if (this.currentPage === 1) {
+                    return 1;
+                }
+                if (this.currentPage === this.totalPages) { 
+                    return this.totalPages - this.maxVisibleButtons + 1;
+                }
+                return this.currentPage - 1;
+            },
+            endPage() {
+                return Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
+            },
+            pages() {
+                const range = [];
+                for (let i = this.startPage; i <= this.endPage; i+= 1 ) {
+                    range.push({
+                    name: i,
+                    isDisabled: i === this.currentPage 
+                    });
+                }
+                return range;
+            },
+            isInFirstPage() {
+                return this.currentPage === 1;
+            },
+            isInLastPage() {
+                return this.currentPage === this.totalPages;
+            },
+        },
+        methods: {
+            onClickFirstPage() {
+                this.$emit('pagechanged', 1);
+            },
+            onClickPreviousPage() {
+                this.$emit('pagechanged', this.currentPage - 1);
+            },
+            onClickPage(page) {
+                this.$emit('pagechanged', page);
+            },
+            onClickNextPage() {
+                this.$emit('pagechanged', this.currentPage + 1);
+            },
+            onClickLastPage() {
+                this.$emit('pagechanged', this.totalPages);    
+            },
+            isPageActive(page) {
+                return this.currentPage === page;
+            },
+        }
+    };
+
+    const vm = new Vue({
+        router,
+        el: '#app',
+        name: 'app',
+        components: {
+            pagination: Pagination,
+        },
+        data: {
+            posts:'<%page.posts%>',
+            currentPage: 1,
+            popups,
+            blogs,
+            blogCategories,
+            logInuser:{},
+            loggedIn: false,
+            uniqueDateArr: [],
+            blogPosts: [],
+            pageUriForHeader: '',
+            uniqueDates : [],
+            mainCategory : {
+                title: '',
+                featureImg : '',
+            },
+            childCategory : {
+                title: '',
+                featureImg : '',
+            },
+            childCategory1 : {
+                title: '',
+                featureImg : '',
+            },
+            dateBlogs: [],
+            showingDateBlogs: false,
+            calander:{
+                year : 2022,
+                selectedMon: '',
+                months : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                days : [],
+            },
+            drpdwnYear: '',
+            drpdwnMon: '',
+            newParams: {},
+            currDate: {
+                dd: '',
+                mm: '',
+                yy: "",
+            },
+            f_newDate: '',
+                    
+        },
+        methods: {
+            loadPopup: function () {
+                // axios.get("/api/webber/popup?limit=1&status=true&sort=createdAt DESC")
+                // .then(response => {
+                //     this.popups=response.data; 
+                //     if (this.popups.length) {                    
+                //         setTimeout(function(){
+                //             $(window).on('load',function(){
+                //                 $('#edukitModel').modal('show');
+                //             });
+                //         }, 0);
+                //     };
+                // })
+                // .catch(function (error) {
+                //     console.log(error);
+                // })
+            },
+            selectedCalander: function(){
+                const qryStr = window.location.search;
+
+                const paramsStr = new URLSearchParams(window.location.search);
+                let k=[];
+                for(var value of paramsStr.values()) {
+                    k.push(value);
+                    // console.log(value);
+                    }
+                this.calander.year = k[0];
+                this.drpdwnYear = k[0];
+                this.calander.selectedMon =k[1];
+                let xyz= k[1];
+                function capitalize(word) {
+                    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+                    }
+                 capitalize(xyz);   
+                this.drpdwnMon =xyz;
+                this.loadcalander( this.calander.year, this.calander.selectedMon);                
+            },
+            loadcalander: function(year, month){
+                    if(month == "February" || month == "April" || month == "June" || month == "September" || month == "November" 
+                    || month == "february" || month == "april" || month == "june" || month == "september" || month == "november" ){
+                        if(!(month == "February" || month == "february")){
+                            for(let j=1; j <= 30; j++){
+                                this.calander.days.push(j);
+                                }
+                        }else{
+                            if(year % 4 != 0){
+                                for(let j=1; j <= 28; j++){
+                                this.calander.days.push(j);                     
+                                }
+                            }else{
+                                for(let j=1; j <= 29; j++){
+                                this.calander.days.push(j);     
+                                }
+                            }
+                        }
+                    }else{
+                        for(let j=1; j <= 31; j++){
+                                this.calander.days.push(j);        
+                        }
+                    }
+                 
+                // document.getElementById('demoCal').innerHTML= this.calander.days; 
+            },
+            selectedDrpdwnMon: function(){
+                this.calander.selectedMon = this.drpdwnMon.toLowerCase();
+                window.location = 'https://ensureias.com/blog/category/current-affairs?childcategory=' + this.calander.year +'&childcategory1='+ this.calander.selectedMon;
+               
+            },
+            selectedDrpdwnYr: function(){
+                this.calander.year = this.drpdwnYear
+                window.location = 'https://ensureias.com/blog/category/current-affairs?childcategory=' + this.calander.year +'&childcategory1='+ this.calander.selectedMon;
+            },
+
+            prevMonth: function(){
+                const monthArr = this.calander.months.map(mon => mon.toLowerCase());
+                let prevMonInd = monthArr.indexOf(this.calander.selectedMon);
+                prevMonInd = prevMonInd - 1;
+                let nyr = parseInt(this.calander.year, 10)
+                if(prevMonInd >= 0 && prevMonInd < 12){
+                    this.calander.selectedMon = monthArr[prevMonInd];
+                    window.location = 'https://ensureias.com/blog/category/current-affairs?childcategory=' +  nyr +'&childcategory1='+ this.calander.selectedMon;
+                }else if(prevMonInd < 0){
+                        prevMonInd = 11;
+                        nyr -= 1;
+                        this.calander.selectedMon = monthArr[prevMonInd];
+                        window.location = 'https://ensureias.com/blog/category/current-affairs?childcategory=' +  nyr +'&childcategory1='+ this.calander.selectedMon;
+                    }
+                
+                // console.log(monthArr[prevMonInd], prevMonInd,  nyr);
+            },
+            nextMonth: function(){
+                const monthArr = this.calander.months.map(mon => mon.toLowerCase());
+                let prevMonInd = monthArr.indexOf(this.calander.selectedMon);
+                prevMonInd = prevMonInd + 1;
+                let nyr = parseInt(this.calander.year, 10)
+                if(prevMonInd >= 0 && prevMonInd < 12){
+                    this.calander.selectedMon = monthArr[prevMonInd];
+                    window.location = 'https://ensureias.com/blog/category/current-affairs?childcategory=' +  nyr +'&childcategory1='+ this.calander.selectedMon;
+                }else if(prevMonInd >11 ){
+                        prevMonInd = 0;
+                        nyr += 1;
+                        this.calander.selectedMon = monthArr[prevMonInd];
+                        window.location = 'https://ensureias.com/blog/category/current-affairs?childcategory=' +  nyr +'&childcategory1='+ this.calander.selectedMon;
+                    }
+                
+                // console.log(monthArr[prevMonInd], prevMonInd,  nyr );
+            },
+            getNewDate: function(e){
+                let u = e.target.innerHTML;
+                this.currDate.dd = parseInt(u);
+                this.currDate.mm = this.calander.selectedMon;
+                function capitalize(word) {
+                    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+                    }
+                this.currDate.yy = this.calander.year;
+                document.getElementById('selected-Date').innerHTML = this.currDate.dd + " " + capitalize(this.currDate.mm) + ', '+ this.currDate.yy;
+                const x = document.getElementById('selected-Date').innerHTML;
+                this.f_newDate = this.formatDate(x);
+                
+                    this.goToBlogDateFilter(this.f_newDate);
+               
+            },
+          
+            goToBlogDateFilter: function(dated){
+                this.showingDateBlogs = true;
+                debugger
+                
+                let x = this.blogs;
+
+                this.dateBlogs= this.blogs.filter(item=>{
+                    if(item.publishedAt == dated){
+                        //debugger
+                       
+                        return true;
+                    }
+                    
+                })
+            },
+            resetDate: function(){
+                if(this.showingDateBlogs){
+                    this.showingDateBlogs= !this.showingDateBlogs;
+                }
+            },
+            loadBlogs: function(category1, category2, category3){
+                
+                
+                let x = category1;
+                let y = category2;
+                let filter = {
+                    category : category1,
+                    limit : 'all',
+                }
+                let filteredBlogs= [];
+                axios.get("/api/public/data/posts", {params: filter})
+                .then(response => {
+                    this.blogs=response.data;
+                    
+                    for(let i=0; i<this.blogs.length; i++){
+                        for(let j=0; j<this.blogs[i].postCategories.length; j++){
+                            if(this.blogs[i].postCategories[j].id==category2){
+                                for(let k=0; k<this.blogs[i].postCategories.length; k++){
+                                    let ab = this.blogs[i].postCategories[j].id;
+                                    let bc = this.blogs[i].postCategories[k].id;
+                                    
+                                    if(this.blogs[i].postCategories[k].id==category3){
+                                        this.blogs[i].publishedAt= this.formatDate(this.blogs[i].publishedAt);
+                                        filteredBlogs.push(this.blogs[i]); 
+                                        
+
+                                    }
+                                    
+                                }
+                                
+                            }    
+                        }
+                    }
+                    
+
+                    this.blogs = filteredBlogs;
+                    
+                
+
+                    let blogpostdata = [];
+                    for(let i=0;i<this.blogs.length; i++){
+                        let publishedAt=this.formatDate(this.blogs[i].publishedAt);
+                        let fullUrl=this.blogs[i].fullUrl;
+                        blogpostdata.push({'publishedAt':publishedAt, 'fullUrl': fullUrl });
+                    }
+                    blogpostdata.sort(function(a,b){
+                    return new Date(b.publishedAt) - new Date(a.publishedAt);
+    
+                    });
+                    let uniqueDateArr= [];
+                    for(let i=0; i<blogpostdata.length; i++){
+                        if(!uniqueDateArr.includes(blogpostdata[i].publishedAt)){
+                            uniqueDateArr.push(blogpostdata[i].publishedAt);
+                        }
+                    }
+                    this.uniqueDates = uniqueDateArr;
+                    //debugger
+                })
+                .catch(function(error){
+                    console.log(error)
+                })
+            },
+            loadBlogCategories: function(){
+                axios.get("/api/public/data/post-categories?status=true&limit=all&sort=createdAt DESC")
+                .then(response => {
+                    this.blogCategories=response.data;
+                    let mainCategory = window.location.pathname.split('/').pop();
+                    let childcategory = (new URLSearchParams(window.location.search)).get('childcategory');
+                    let childcategory1 = (new URLSearchParams(window.location.search)).get('childcategory1');
+                    let mainCategoryId = '';
+                    let childCategoryId = '';
+                    let childCategory1Id = '';
+
+                    for(let i=0; i< this.blogCategories.length; i++){
+                        if(this.blogCategories[i].slug==mainCategory){
+                            mainCategoryId = this.blogCategories[i].id;
+                            this.mainCategory.title = this.blogCategories[i].title;
+                            this.mainCategory.featureImg = this.blogCategories[i].featureImg;
+                        }
+                        if(this.blogCategories[i].slug==childcategory){
+                            
+                            childCategoryId = this.blogCategories[i].id;
+                            this.childCategory.title = this.blogCategories[i].title;
+                            this.childCategory.featureImg = this.blogCategories[i].featureImg;
+                            
+                        }
+                        if(this.blogCategories[i].slug==childcategory1){
+                            
+                            childCategory1Id = this.blogCategories[i].id;
+                            this.childCategory1.title = this.blogCategories[i].title;
+                            this.childCategory1.featureImg = this.blogCategories[i].featureImg;
+                            
+                        }
+                    }
+                    this.loadBlogs(mainCategoryId,childCategoryId, childCategory1Id);
+
+                    
+                })
+                .catch(function(error){
+                    console.log(error)
+                })
+            },
+            disableEmptyBtn: function(){
+                const ndateArr=[];
+                this.uniqueDates.forEach(function(d, ind){
+                    ndateArr.push(parseInt(d, 10))
+                   // debugger
+                })
+                console.log(this.uniqueDates)
+            },
+
+            formatDate(value){
+		    	if (value) {
+		            return moment(String(value)).format('DD MMMM, YYYY')
+		        }
+		    },
+            onPageChange(page) {
+                console.log(page)
+                this.currentPage = page;
+                window.location.href= '/category/<%-page.slug%>?page='+page;
+            },
+            getDesc :function(desc,value) {
+                let desci = this.stripTags(desc);
+                return desci.length > value ? desci.substring(0, value) + '...' : desci;
+            },
+            stripTags :function(text) {
+                return text.replace(/(<([^>]+)>)/ig, '');
+            },
+            getMyDate(){
+
+            },
+            setLogOut: function () {
+                axios.post("/api/auth/logout")
+                .then(response=>{
+                    let user = localStorage.removeItem('user');
+                    localStorage.removeItem('authToken');
+                    var currentUrl=document.URL;
+                    window.location.href=currentUrl;
+                    this.loggedin=false;
+                    if(user){
+                        this.user=JSON.parse(user);
+                        this.loggedin=false;
+                    }           	
+                })
+                .catch(function(error){
+                    console.log(error)
+                })
+            },
+        },
+        created() {
+            if(this.$route.query.page){
+                this.currentPage = parseInt(this.$route.query.page);
+            }
+            this.selectedCalander();
+            this.loadPopup();
+            this.loadBlogCategories();
+            this.disableEmptyBtn();
+            let logInuser = localStorage.getItem('user');
+            if(logInuser){
+                this.logInuser=JSON.parse(logInuser);
+                if(this.logInuser.type=='STUDENT'){
+                    this.loggedIn=true;
+                }
+            }
+        },
+});
+</script>
+
+</body>
+</html>
